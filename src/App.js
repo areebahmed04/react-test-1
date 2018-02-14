@@ -35,8 +35,6 @@ class App extends Component {
     const pchannel = pusher.subscribe('presence-info');
     const uChannel = pusher.subscribe('onlineUsers');
 
-    console.log("SDD");
-
     uChannel.bind('change', data => {
         var allUsers = [];
         for(var i=0;i<data.length;i++){
