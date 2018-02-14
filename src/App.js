@@ -157,7 +157,7 @@ class App extends Component {
                       )
                     }
                   }
-        </AutoSizer>
+            </AutoSizer>
               
           </div>
         </div>
