@@ -23,12 +23,3 @@
 .column {
     float: left;
 }
-
-.box{
-  margin-top: 520px;
-  position: fixed;
-  padding-left: 20px;
-  justify-content: center;
-  align-items: center;
-  background-color: 'blue';
-}

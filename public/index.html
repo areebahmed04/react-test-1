@@ -30,7 +30,29 @@
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
+      
+    <div id="status"></div>
+
     <div id="root" style="height:100px;"></div>
+
+    <script>
+
+      window.addEventListener('load', function() {
+        var status = document.getElementById("status");
+
+        function updateOnlineStatus(event) {
+          var condition = navigator.onLine ? "online" : "offline";
+
+          status.className = condition;
+          status.innerHTML = condition.toUpperCase();
+        }
+
+        window.addEventListener('online',  updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
+      });
+
+
+    </script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
