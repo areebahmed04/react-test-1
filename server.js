@@ -17,24 +17,7 @@ const pusher = new Pusher({
   encrypted: true
 });
 
-app.set('PORT', process.env.PORT || 5000);	
-
-var getUsers = function(){
-  
-  var payload;
-  pusher.get({ path: '/channels/presence-info/users', params: {} },
-  function(error, request, response) {
-    if(response.statusCode === 200) {
-      var result = JSON.parse(response.body);
-      var users = result.users;
-      payload = users;
-    }else{
-      console.log("Can't get online user detail!!");
-    }
-  });
-
-  return payload;
-}
+app.set('PORT', process.env.PORT || 5000);
 
 var userId=0;
 app.post('/message', (req, res) => {
@@ -54,8 +37,6 @@ app.post('/pusher/auth', function(req, res) {
     }
   };
 
-  var allUsers = getUsers();
-
   var auth = pusher.authenticate(socketId, channel, presenceData);
   console.log("authenticated");
   userId+=1;
@@ -64,8 +45,18 @@ app.post('/pusher/auth', function(req, res) {
 
 app.post('/', function(req,res){
   
-  payload = getUsers();
-  pusher.trigger('onlineUsers', 'change', payload);
+  pusher.get({ path: '/channels/presence-info/users', params: {} },
+  function(error, request, response) {
+    if(response.statusCode === 200) {
+      var result = JSON.parse(response.body);
+      var users = result.users;
+      console.log(users);
+      pusher.trigger('onlineUsers', 'change', users);
+    }else{
+      console.log("Can't get online user detail!!");
+    }
+  });
+  
   console.log('webhook worked');
   res.status(200);
   res.send('Successfull');
